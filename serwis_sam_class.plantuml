@@ -1,0 +1,77 @@
+@startuml "serwis_samochodowy_diagram_klas"
+
+class Osoba {
+    - imie: string
+    - nazwisko: string
+}
+
+class Klient {
+    - nip: int
+    + zgłośUsterkę()
+    + odbierzFakture()
+    + odbierzSamochód()
+}
+
+class Pracownik {
+    - stanowisko: string
+}
+
+class Ksiegowy {
+    + wystawFakture()
+}
+
+class Mechanik {
+    - specjalizacja: string
+    + naprawSamochód(Samochod, Usterka) 
+    + zamowCzesc(Samochod, Czesc)
+}
+
+class Serwis {
+    - pracownicy[]
+    - klienci[]
+    + przypiszMechanika(Usterka, Mechanik)
+    + przyjmijSamochód(Samochod, Klient)
+    + wydajSamochód(Samochod, Klient)
+    + generujRaportSerwisowy(Samochod, Usterka)
+}
+
+class Samochod {
+    - marka: string
+    - model: string
+    - rokProdukcji: int
+    - pojemnośćSilnika: float
+    - rodzajPaliwa: string
+}
+
+class Usterka {
+    - opis: string
+    - kosztNaprawy: float
+}
+
+class Faktura {
+    - numerFaktury: int
+    - kwotaCalkowita: float
+}
+
+class Czesc {
+    - numerCzesci: int
+    - koszt: float
+    - ilosc: int
+}
+
+Klient --|> Osoba
+Pracownik --|> Osoba
+Pracownik --|> Mechanik
+Pracownik --|> Ksiegowy
+
+Klient --> Serwis: Odwiedza
+Klient --> Samochod: Posiada
+Klient --> Faktura
+Ksiegowy --> Faktura: Wystawia
+
+Serwis -up-o Pracownik: Posiada
+Samochod --o Usterka: Posiada
+Usterka --> Czesc: Wymaga
+Mechanik --> Czesc: Zamawia
+
+@enduml

@@ -1,0 +1,28 @@
+@startuml "serwis_samochodowy_diagram_aktywnosci"
+
+start
+
+:Klient zgłasza usterkę;
+:Serwis przyjmuje auto;
+if (Czy usterka wymaga naprawy?) then (tak)
+    :Serwis przypisuje mechanika do naprawy;
+    if (Czy usterka wymaga wymiany części?) then (tak)
+    :Mechanik zamawia część;
+    repeat: Mechanik czeka
+    repeat while (Czy część dotarła?) is (nie) not (tak)
+    else (nie)
+    endif
+    :Mechanik naprawia samochód;
+else (nie)
+    stop
+endif
+repeat: Klient czeka
+repeat while (Czy samochód jest gotowy?) is (nie) not (tak)
+:Serwis generuje raport;
+:Księgowy wystawia fakturę;
+:Klient odbiera fakturę;
+:Serwis wydaje samochód;
+:Klient odbiera samochód;
+stop
+
+@enduml

@@ -1,0 +1,42 @@
+@startuml "serwis_samochodowy_diagram_przypadkow_uzycia"
+
+actor Klient as K
+actor Mechanik as M
+actor Ksiegowy as Ks
+entity Serwis as S
+actor Osoba as O
+actor Pracownik as P
+
+K --|> O
+P --|> O
+Ks --|> P
+M --|> P
+
+usecase "Przypisanie mechanika" as przy_mech
+usecase "Zamówienie części" as zam_czesc
+usecase "Zgłoszenie usterki" as zgl_ust
+usecase "Odbiór faktury" as odb_fakt
+usecase "Odbiór samochodu" as odb_samo
+usecase "Naprawa samochodu" as nap_samo
+usecase "Przyjęcie samochodu" as przy_samo
+usecase "Wydanie samochodu" as wyd_samo
+usecase "Generowanie raportu serwisowego" as gen_rap
+usecase "Wystawienie faktury" as wys_fakt
+
+S -- przy_mech
+M -- zam_czesc
+K -- zgl_ust
+K -- odb_fakt
+K -- odb_samo
+M -- nap_samo
+S -- przy_samo
+S -- wyd_samo
+S -- gen_rap
+Ks -- wys_fakt
+
+wys_fakt --> odb_fakt: <<invoke>>
+odb_samo <-- wyd_samo: <<invoke>>
+zgl_ust --> przy_samo: <<invoke>>
+
+
+@enduml

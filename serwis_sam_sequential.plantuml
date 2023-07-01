@@ -1,0 +1,22 @@
+@startuml "serwis_samochodowy_diagram_sekwencji"
+
+actor Klient
+
+Klient -> Serwis: zgłośUsterkę()
+Serwis -> Samochod: przyjmijSamochod()
+Serwis -> Klient: potwierdzeniePrzyjęcia()
+Serwis -> Pracownik: przydzielPracownika()
+Pracownik -> Samochod: wstepneOgledziny()
+Pracownik -> Serwis: decyzja()
+alt Usterka wymaga naprawy
+    Serwis -> Pracownik: przypiszMechanika()
+    Pracownik -> Mechanik: naprawSamochód(Samochod, Usterka)
+    Mechanik -> Serwis: generujRaportSerwisowy(Samochod, Usterka)
+    Serwis -> Klient: powiadomKlienta()
+    Ksiegowy -> Klient: wygenerujFakturę()
+    Klient -> Ksiegowy: odbierzFakturę()
+else Usterka nie wymaga naprawy
+    Serwis -> Klient: zgłośBrakNaprawy()
+end
+Serwis -> Klient: wydajSamochód(Samochod)
+@enduml
