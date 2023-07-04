@@ -14,6 +14,9 @@ if (Czy usterka wymaga naprawy?) then (tak)
     endif
     :Mechanik naprawia samochód;
 else (nie)
+    :Zgłoś brak naprawy;
+    :Serwis wydaje samochód;
+    :Klient odbiera samochód;
     stop
 endif
 repeat: Klient czeka

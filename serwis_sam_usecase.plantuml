@@ -22,6 +22,7 @@ usecase "Przyjęcie samochodu" as przy_samo
 usecase "Wydanie samochodu" as wyd_samo
 usecase "Generowanie raportu serwisowego" as gen_rap
 usecase "Wystawienie faktury" as wys_fakt
+usecase "Powiadomienie o braku naprawy" as brak_nap
 
 S -- przy_mech
 M -- zam_czesc
@@ -33,6 +34,7 @@ S -- przy_samo
 S -- wyd_samo
 S -- gen_rap
 Ks -- wys_fakt
+S -- brak_nap
 
 wys_fakt --> odb_fakt: <<invoke>>
 odb_samo <-- wyd_samo: <<invoke>>

@@ -33,6 +33,7 @@ class Serwis {
     + przyjmijSamochód(Samochod, Klient)
     + wydajSamochód(Samochod, Klient)
     + generujRaportSerwisowy(Samochod, Usterka)
+    + zglosBrakNaprawy(Samochod, Klient)
 }
 
 class Samochod {

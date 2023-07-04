@@ -1,22 +1,27 @@
 @startuml "serwis_samochodowy_diagram_sekwencji"
 
 actor Klient
-
-Klient -> Serwis: zgłośUsterkę()
-Serwis -> Samochod: przyjmijSamochod()
-Serwis -> Klient: potwierdzeniePrzyjęcia()
-Serwis -> Pracownik: przydzielPracownika()
-Pracownik -> Samochod: wstepneOgledziny()
-Pracownik -> Serwis: decyzja()
+Klient -> Serwis: zgłosUsterkę()
+Serwis -> Samochod: przyjmijSamochod(Samochod, Klient)
 alt Usterka wymaga naprawy
-    Serwis -> Pracownik: przypiszMechanika()
-    Pracownik -> Mechanik: naprawSamochód(Samochod, Usterka)
+    Serwis -> Mechanik: przypiszMechanika(Usterka, Mechanik)
+    alt Usterka wymaga wymiany części
+        Mechanik -> Czesc: zamowCzesc(Czesc, Samochod)
+        loop Do momentu aż część zostanie dostarczona
+        end
+    end
+    Mechanik -> Samochod: naprawSamochód(Samochod, Usterka)
+    alt Samochód naprawiony
+    else
+        loop Do momentu gdy samochód zostanie naprawiony
+        end
+    end
     Mechanik -> Serwis: generujRaportSerwisowy(Samochod, Usterka)
-    Serwis -> Klient: powiadomKlienta()
-    Ksiegowy -> Klient: wygenerujFakturę()
+    Ksiegowy -> Faktura: wystawFakture()
     Klient -> Ksiegowy: odbierzFakturę()
 else Usterka nie wymaga naprawy
-    Serwis -> Klient: zgłośBrakNaprawy()
+    Serwis -> Klient: zglosBrakNaprawy(Samochod, Klient)
 end
-Serwis -> Klient: wydajSamochód(Samochod)
+Serwis -> Klient: wydajSamochód(Samochod, Klient)
+Klient -> Serwis: odbierzSamochód()
 @enduml
