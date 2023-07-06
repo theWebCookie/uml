@@ -7,13 +7,13 @@ alt Usterka wymaga naprawy
     Serwis -> Mechanik: przypiszMechanika(Usterka, Mechanik)
     alt Usterka wymaga wymiany części
         Mechanik -> Czesc: zamowCzesc(Czesc, Samochod)
-        loop Do momentu aż część zostanie dostarczona
+        loop Czekaj do momentu aż część zostanie dostarczona
         end
     end
     Mechanik -> Samochod: naprawSamochód(Samochod, Usterka)
     alt Samochód naprawiony
-    else
-        loop Do momentu gdy samochód zostanie naprawiony
+    else Samochód w naprawie
+        loop Czekaj do momentu gdy samochód zostanie naprawiony
         end
     end
     Mechanik -> Serwis: generujRaportSerwisowy(Samochod, Usterka)
